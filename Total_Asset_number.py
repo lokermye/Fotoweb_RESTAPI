@@ -3,13 +3,10 @@
 import requests 
 #import re for regex
 import re
-
 #importing the pymongo library
 #import pymongo
-
 #impoerting the os library
 #import os
-#,"fwapitoken": "5cf29305-09f0-4b5a-a063-60375a9b296C"
 #Accept: application/vnd.fotoware.assetlist+json
 import json
 #delete
@@ -90,7 +87,7 @@ for archive in data['data']:
    next_al= requests.request("GET", urlpage, headers=headers_AL )
    next_aljson=json.loads(next_al.content)
    #print(next_al.response)
-   page=(next_aljson['paging']['last'])
+   page=(next_aljson['paging']['next'])
    numberfromstring = ((re.findall('p=\d{1,3}',page))[0])
    print( numberfromstring)
    numberfromstring =int(numberfromstring.replace('p=',''))
@@ -102,7 +99,7 @@ for archive in data['data']:
    #print((numberfromstring*25))
    total=(numberfromstring+1)*25
    print(total)
-  
+   page=(next_aljson['paging']['last'])
    urlpage=('https://kulturminnebilder.ra.no'+((next_aljson['paging']['next'])))
    
    
