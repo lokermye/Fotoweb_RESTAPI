@@ -1,27 +1,27 @@
- import requests,re,json 
+#print(json.dumps(data, indent=2))
+# importing the requests library 
+import requests,re,json 
+#delete
 
-url = "https://kulturminnebilder.ra.no/fotoweb/archives/5012-Byer/"
 
-headers = {
-    'Accept': "application/vnd.fotoware.assetlist+json",
-    'cache-control': "no-cache",
-    }
 
-response = requests.request("GET", url, headers=headers)
+
+#print(response.text)
+#delete
 
 print('test of requests module')
 #Archive list#
 url="https://kulturminnebilder.ra.no/fotoweb/archives/"
-headers = {
+collectionlistH = {
     'Accept': "application/vnd.fotoware.collectionlist+json",
     'cache-control': "no-cache",
     }
 
-r =  requests.request("GET", url, headers=headers)
-#Archive list#
+rcollectionlist =  requests.request("GET", url, headers=collectionlistH)
+
 
 #Load json#
-data = json.loads(r.content)
+data = json.loads(rcollectionlist.content)
 
 #print some returned data 
 print('Avalable Archives:')
@@ -68,7 +68,6 @@ for archive in data['data']:
    print('number of pages:')
    print((numberfromstring+1))
    print('tot number of assets:')
-   #print((numberfromstring*25))
    total=(numberfromstring+1)*25
    print(total)
    page=(next_aljson['paging']['last'])
