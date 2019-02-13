@@ -1,7 +1,5 @@
-#print(json.dumps(data, indent=2))
-# importing the requests library 
-import requests,re,json 
-#delete
+ import requests,re,json 
+
 url = "https://kulturminnebilder.ra.no/fotoweb/archives/5012-Byer/"
 
 headers = {
@@ -10,9 +8,6 @@ headers = {
     }
 
 response = requests.request("GET", url, headers=headers)
-
-#print(response.text)
-#delete
 
 print('test of requests module')
 #Archive list#
