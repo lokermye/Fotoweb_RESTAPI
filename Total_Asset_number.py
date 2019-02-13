@@ -1,15 +1,6 @@
-#print(json.dumps(data, indent=2))
-# importing the requests library 
+
 import requests,re,json 
-#delete
 
-
-
-
-#print(response.text)
-#delete
-
-print('test of requests module')
 #Archive list#
 url="https://kulturminnebilder.ra.no/fotoweb/archives/"
 collectionlistH = {
@@ -63,8 +54,6 @@ for archive in data['data']:
    numberfromstring = ((re.findall('p=\d{1,3}',page))[0])
 
    numberfromstring =int(numberfromstring.replace('p=',''))
-   print(numberfromstring)
-   
    print('number of pages:')
    print((numberfromstring+1))
    print('tot number of assets:')
