@@ -45,7 +45,7 @@ for archive in data['data']:
   #api reqest archive list#
   archive_url=(baseurl+(archive['href']))    
 
-  #import requests
+  
 
 
 
@@ -59,7 +59,7 @@ for archive in data['data']:
 
 
   lastpage=(AL_Json['paging']['last'])
-  #go thorug all pages merge json to do a doc count :) 
+   
   doc_count=0
   page=" "
   while page  !=lastpage:
