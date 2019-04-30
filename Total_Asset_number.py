@@ -1,34 +1,13 @@
 import requests,re,json 
 
-baseurl="https://kulturminnebilder.ra.no"
-
-#api descritor headder#
-apidescripH={
-    'Accept': "application/vnd.fotoware.api-descriptor+json",
-    'cache-control': "no-cache",
-    }
-              
-#colection list headder#
-
+#Archive list#
+url="https://kulturminnebilder.ra.no/fotoweb/archives/"
 collectionlistH = {
     'Accept': "application/vnd.fotoware.collectionlist+json",
     'cache-control': "no-cache",
     }
-#asset list headder
-headers_AL = {
-    'Accept': "application/vnd.fotoware.assetlist+json",
-    'cache-control': "no-cache",
-    }
 
-rapidescritor= requests.request("GET", baseurl, headers=apidescripH)
-rapidescrptorjson= json.loads(rapidescritor.content)
-archives_url=baseurl+(rapidescrptorjson["archives"])
-
-
-
-
-
-rcollectionlist =  requests.request("GET", archives_url, headers=collectionlistH)
+rcollectionlist =  requests.request("GET", url, headers=collectionlistH)
 
 
 #Load json#
@@ -43,23 +22,28 @@ for archive in data['data']:
   #  name= archive['data']['name']
   print(archive['name'])
   #api reqest archive list#
-  archive_url=(baseurl+(archive['href']))    
+  archive_url=('https://kulturminnebilder.ra.no'+(archive['href']))    
 
-  
+  #import requests
 
 
 
-  
+  headers_AL = {
+    'Accept': "application/vnd.fotoware.assetlist+json",
+   'cache-control': "no-cache",
+    }
 
   AL_response = requests.request("GET", archive_url, headers=headers_AL)
   AL_Json=json.loads(AL_response.content)
-
-  urlpage=(baseurl+((AL_Json['paging']['next'])))
+  
+  if not (AL_Json['paging']):
+    continue
+  urlpage=('https://kulturminnebilder.ra.no'+((AL_Json['paging']['next'])))
   #OWERWRTIE IN WHILE LOOP
 
 
   lastpage=(AL_Json['paging']['last'])
-   
+  #go thorug all pages merge json to do a doc count :) 
   doc_count=0
   page=" "
   while page  !=lastpage:
@@ -77,7 +61,8 @@ for archive in data['data']:
    total=(numberfromstring+1)*25
    print(total)
    page=(next_aljson['paging']['last'])
-   urlpage=(baseurl+((next_aljson['paging']['next'])))
+   urlpage=('https://kulturminnebilder.ra.no'+((next_aljson['paging']['next'])))
    
    
    
+
